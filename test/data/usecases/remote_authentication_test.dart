@@ -4,9 +4,8 @@ import 'package:test/test.dart';
 
 import 'package:clean_flutter_app/domain/usecases/usecases.dart';
 
-import 'package:clean_flutter_app/data/usecases/usecases.dart';
 import 'package:clean_flutter_app/data/http/http.dart';
-
+import 'package:clean_flutter_app/data/usecases/usecases.dart';
 
 class HttpClientSpy extends Mock implements HttpClient {}
 
