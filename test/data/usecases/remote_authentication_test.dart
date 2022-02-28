@@ -45,7 +45,7 @@ void main() {
   });
 
   test('Should call HttpClient with correct values', () async {
-    await sut.auth(params);
+    await sut.auth(params: params);
 
     verify(httpClient.request(
       url: url,
@@ -57,7 +57,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 400', () {
     mockHttpError(HttpError.badRequest);
 
-    final future = sut.auth(params);
+    final future = sut.auth(params: params);
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -65,7 +65,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 404', () {
     mockHttpError(HttpError.notFound);
 
-    final future = sut.auth(params);
+    final future = sut.auth(params: params);
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -73,7 +73,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 500', () {
     mockHttpError(HttpError.serverError);
 
-    final future = sut.auth(params);
+    final future = sut.auth(params: params);
 
     expect(future, throwsA(DomainError.unexpected));
   });
@@ -81,7 +81,7 @@ void main() {
   test('Should throw InvalidCredentialsError if HttpClient returns 401', () {
     mockHttpError(HttpError.unauthorized);
 
-    final future = sut.auth(params);
+    final future = sut.auth(params: params);
 
     expect(future, throwsA(DomainError.invalidCredentials));
   });
@@ -90,7 +90,7 @@ void main() {
     final validData = mockValidData();
     mockHttpData(validData);
 
-    final account = await sut.auth(params);
+    final account = await sut.auth(params: params);
 
     expect(account.token, validData['accessToken']);
   });
@@ -98,7 +98,7 @@ void main() {
   test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {
     mockHttpData({'invalid_key': 'invalid_value'});
 
-    final future = sut.auth(params);
+    final future = sut.auth(params: params);
 
     expect(future, throwsA(DomainError.unexpected));
   });
