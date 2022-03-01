@@ -118,6 +118,14 @@ String url;
       expect(future, throwsA(HttpError.badRequest));
     });
 
+    test('Should return UnauthorizedError if post returns 401', () {
+      mockResponse(401);
+
+      final future = sut.request(url: url, method: 'post');
+
+      expect(future, throwsA(HttpError.unauthorized));
+    });
+
     test('Should return ServerError if post returns 500', () {
       mockResponse(500);
 
