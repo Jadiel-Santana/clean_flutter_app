@@ -9,16 +9,26 @@ import 'package:clean_flutter_app/infra/http/http.dart';
 
 class ClientSpy extends Mock implements Client {}
 
-
 void main() {
-HttpAdapter sut;
-ClientSpy client;
-String url;
+  HttpAdapter sut;
+  ClientSpy client;
+  String url;
 
   setUp(() {
     client = ClientSpy();
     sut = HttpAdapter(client);
     url = faker.internet.httpUrl();
+  });
+
+  group('shared', () {
+    test('Should throw ServerError if invalid method is provided', () {
+      final future = sut.request(
+        url: url,
+        method: 'invalid_method',
+      );
+
+      expect(future, throwsA(HttpError.serverError));
+    });
   });
 
   group('post', () {
@@ -42,7 +52,7 @@ String url;
       mockResponse(200);
     });
 
-    test('Should call post with corret values', () async {
+    test('Should call post with correct values', () async {
       await sut.request(
         url: url,
         method: 'post',
