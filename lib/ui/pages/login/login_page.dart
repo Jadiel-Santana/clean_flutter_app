@@ -17,29 +17,32 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             LoginHeader(),
-            Headline1(title: 'Login',),
+            Headline1(
+              title: 'Login',
+            ),
             Padding(
               padding: const EdgeInsets.all(32),
               child: Form(
                 child: Column(
                   children: [
                     StreamBuilder<String>(
-                      stream: presenter.emailErrorStream,
-                      builder: (context, snapshot) {
-                        return TextFormField(
-                          onChanged: presenter.validateEmail,
-                          decoration: InputDecoration(
-                            labelText: 'E-mail',
-                            icon: Icon(
-                              Icons.email,
-                              color: Theme.of(context).primaryColorLight,
+                        stream: presenter.emailErrorStream,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            onChanged: presenter.validateEmail,
+                            decoration: InputDecoration(
+                              labelText: 'E-mail',
+                              icon: Icon(
+                                Icons.email,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              errorText: snapshot.data?.isEmpty == true
+                                  ? null
+                                  : snapshot.data,
                             ),
-                            errorText: snapshot.data,
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                        );
-                      }
-                    ),
+                            keyboardType: TextInputType.emailAddress,
+                          );
+                        }),
                     Padding(
                       padding: const EdgeInsets.only(
                         top: 8,
