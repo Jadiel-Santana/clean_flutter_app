@@ -37,8 +37,8 @@ class LoginPage extends StatelessWidget {
                                 color: Theme.of(context).primaryColorLight,
                               ),
                               errorText: snapshot.data?.isEmpty == true
-                                  ? null
-                                  : snapshot.data,
+                                ? null
+                                : snapshot.data,
                             ),
                             keyboardType: TextInputType.emailAddress,
                           );
@@ -48,16 +48,22 @@ class LoginPage extends StatelessWidget {
                         top: 8,
                         bottom: 32,
                       ),
-                      child: TextFormField(
-                        onChanged: presenter.validatePassword,
-                        decoration: InputDecoration(
-                          labelText: 'Senha',
-                          icon: Icon(
-                            Icons.lock,
-                            color: Theme.of(context).primaryColorLight,
-                          ),
-                        ),
-                        obscureText: true,
+                      child: StreamBuilder<String>(
+                        stream: presenter.passwordErrorStream,
+                        builder: (context, snapshot) {
+                          return TextFormField(
+                            onChanged: presenter.validatePassword,
+                            decoration: InputDecoration(
+                              labelText: 'Senha',
+                              icon: Icon(
+                                Icons.lock,
+                                color: Theme.of(context).primaryColorLight,
+                              ),
+                              errorText: snapshot.data,
+                            ),
+                            obscureText: true,
+                          );
+                        }
                       ),
                     ),
                     RaisedButton(
