@@ -26,7 +26,16 @@ dev_dependencies:
   mockito: 3.0.2
   faker: 1.3.0
 #  image_test_utils: 1.0.0
-#  flutter_launcher_icons: 0.8.1
+#  flutter_launcher_icons: 0.8.0
+#
+#flutter_icons:
+#  ios: true
+#  android: true
+#  remove_alpha_ios: true
+#  image_path_android: "lib/ui/assets/icons/android.png"
+#  image_path_ios: "lib/ui/assets/icons/ios.png"
+#  adaptive_icon_background: "lib/ui/assets/icons/background.png"
+#  adaptive_icon_foreground: "lib/ui/assets/icons/foreground.png"
 
 flutter:
   uses-material-design: true
