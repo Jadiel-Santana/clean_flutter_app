@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
+import 'components/components.dart';
 import '../pages.dart';
 
 class LoginPage extends StatefulWidget {
@@ -42,67 +44,53 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.all(32),
-                child: Form(
-                  child: Column(
-                    children: [
-                      StreamBuilder<String>(
-                          stream: widget.presenter.emailErrorStream,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              onChanged: widget.presenter.validateEmail,
-                              decoration: InputDecoration(
-                                labelText: 'E-mail',
-                                icon: Icon(
-                                  Icons.email,
-                                  color: Theme.of(context).primaryColorLight,
-                                ),
-                                errorText: snapshot.data?.isEmpty == true
-                                    ? null
-                                    : snapshot.data,
-                              ),
-                              keyboardType: TextInputType.emailAddress,
-                            );
-                          }),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          bottom: 32,
-                        ),
-                        child: StreamBuilder<String>(
-                            stream: widget.presenter.passwordErrorStream,
+                child: Provider(
+                  create: (_) => widget.presenter,
+                  child: Form(
+                    child: Column(
+                      children: [
+                        StreamBuilder<String>(
+                            stream: widget.presenter.emailErrorStream,
                             builder: (context, snapshot) {
                               return TextFormField(
-                                onChanged: widget.presenter.validatePassword,
+                                onChanged: widget.presenter.validateEmail,
                                 decoration: InputDecoration(
-                                  labelText: 'Senha',
+                                  labelText: 'E-mail',
                                   icon: Icon(
-                                    Icons.lock,
+                                    Icons.email,
                                     color: Theme.of(context).primaryColorLight,
                                   ),
                                   errorText: snapshot.data?.isEmpty == true
                                       ? null
                                       : snapshot.data,
                                 ),
-                                obscureText: true,
+                                keyboardType: TextInputType.emailAddress,
                               );
                             }),
-                      ),
-                      StreamBuilder<bool>(
-                          stream: widget.presenter.isFormValidStream,
-                          builder: (context, snapshot) {
-                            return RaisedButton(
-                              child: Text('Entrar'.toUpperCase()),
-                              onPressed: (snapshot.data == true)
-                                  ? widget.presenter.auth
-                                  : null,
-                            );
-                          }),
-                      FlatButton.icon(
-                        icon: Icon(Icons.person),
-                        label: Text('Criar Conta'),
-                        onPressed: () {},
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            bottom: 32,
+                          ),
+                          child: EmailInput(),
+                        ),
+                        StreamBuilder<bool>(
+                            stream: widget.presenter.isFormValidStream,
+                            builder: (context, snapshot) {
+                              return RaisedButton(
+                                child: Text('Entrar'.toUpperCase()),
+                                onPressed: (snapshot.data == true)
+                                    ? widget.presenter.auth
+                                    : null,
+                              );
+                            }),
+                        FlatButton.icon(
+                          icon: Icon(Icons.person),
+                          label: Text('Criar Conta'),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
