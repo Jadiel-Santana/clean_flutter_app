@@ -27,9 +27,9 @@ class _LoginPageState extends State<LoginPage> {
             hideLoading(context);
           }
         });
-        
+
         widget.presenter.mainErrorStream.listen((error) {
-          if(error != null) {
+          if (error != null) {
             showErrorMessage(context, error);
           }
         });
@@ -49,24 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Form(
                     child: Column(
                       children: [
-                        StreamBuilder<String>(
-                            stream: widget.presenter.emailErrorStream,
-                            builder: (context, snapshot) {
-                              return TextFormField(
-                                onChanged: widget.presenter.validateEmail,
-                                decoration: InputDecoration(
-                                  labelText: 'E-mail',
-                                  icon: Icon(
-                                    Icons.email,
-                                    color: Theme.of(context).primaryColorLight,
-                                  ),
-                                  errorText: snapshot.data?.isEmpty == true
-                                      ? null
-                                      : snapshot.data,
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              );
-                            }),
+                        PasswordInput(),
                         Padding(
                           padding: const EdgeInsets.only(
                             top: 8,
@@ -75,15 +58,16 @@ class _LoginPageState extends State<LoginPage> {
                           child: EmailInput(),
                         ),
                         StreamBuilder<bool>(
-                            stream: widget.presenter.isFormValidStream,
-                            builder: (context, snapshot) {
-                              return RaisedButton(
-                                child: Text('Entrar'.toUpperCase()),
-                                onPressed: (snapshot.data == true)
-                                    ? widget.presenter.auth
-                                    : null,
-                              );
-                            }),
+                          stream: widget.presenter.isFormValidStream,
+                          builder: (context, snapshot) {
+                            return RaisedButton(
+                              child: Text('Entrar'.toUpperCase()),
+                              onPressed: (snapshot.data == true)
+                                  ? widget.presenter.auth
+                                  : null,
+                            );
+                          },
+                        ),
                         FlatButton.icon(
                           icon: Icon(Icons.person),
                           label: Text('Criar Conta'),
