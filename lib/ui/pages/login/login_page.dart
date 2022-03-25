@@ -51,10 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         PasswordInput(),
                         Padding(
-                          padding: const EdgeInsets.only(
-                            top: 8,
-                            bottom: 32,
-                          ),
+                          padding: const EdgeInsets.only(top: 8, bottom: 32),
                           child: EmailInput(),
                         ),
                         LoginButton(),
