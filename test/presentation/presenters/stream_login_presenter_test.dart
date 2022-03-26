@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
@@ -7,13 +9,22 @@ abstract class Validation {
   String validate({@required String field, @required String value});
 }
 
+class LoginState {
+  String emailerror;
+}
+
 class StreamLoginPresenter {
   final Validation validation;
+  final _controller = StreamController<LoginState>.broadcast();
+  var _state = LoginState();
+
+  Stream<String> get emailErrorStream => _controller.stream.map((state) => state.emailerror);
 
   StreamLoginPresenter({@required this.validation});
 
   void validadeEmail(String email) {
-    validation.validate(field: 'email', value: email);
+    _state.emailerror = validation.validate(field: 'email', value: email);
+    _controller.add(_state);
   }
 }
 
@@ -30,9 +41,18 @@ void main() {
     email = faker.internet.email();
   });
 
-   test('Should call Validation with correct email', () {
-     sut.validadeEmail(email);
+  test('Should call Validation with correct email', () {
+    sut.validadeEmail(email);
 
-     verify(validation.validate(field: 'email', value: email)).called(1);
-   });
+    verify(validation.validate(field: 'email', value: email)).called(1);
+  });
+
+  test('Should emit email error if validation fails', () {
+    when(validation.validate(field: anyNamed('field'), value: anyNamed('value')))
+      .thenReturn('error');
+
+    expectLater(sut.emailErrorStream, emits('error'));
+
+    sut.validadeEmail(email);
+  });
 }
