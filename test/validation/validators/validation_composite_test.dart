@@ -68,7 +68,7 @@ void main() {
     expect(error, null);
   });
 
-  test('Should return the first error', () {
+  test('Should return the first error found', () {
     mockValidation1('error_1');
     mockValidation2('error_2');
     mockValidation3('error_3');
