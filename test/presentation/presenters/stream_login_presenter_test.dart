@@ -38,5 +38,6 @@ void main() {
     sut.emailErrorStream.listen(expectAsync1((error) => expect(error, 'error')));
 
     sut.validadeEmail(email);
+    sut.validadeEmail(email);
   });
 }
