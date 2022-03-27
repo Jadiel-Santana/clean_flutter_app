@@ -14,7 +14,7 @@ class StreamLoginPresenter {
   var _state = LoginState();
 
   Stream<String> get emailErrorStream =>
-      _controller.stream.map((state) => state.emailerror);
+      _controller.stream.map((state) => state.emailerror).distinct();
 
   StreamLoginPresenter({@required this.validation});
 
