@@ -5,7 +5,8 @@ import 'package:meta/meta.dart';
 import '../protocols/protocols.dart';
 
 class LoginState {
-  String emailerror;
+  String emailError;
+  String passwordError;
 
   bool get isFormValid => false;
 }
@@ -15,17 +16,21 @@ class StreamLoginPresenter {
   final _controller = StreamController<LoginState>.broadcast();
   var _state = LoginState();
 
-  Stream<String> get emailErrorStream => _controller.stream.map((state) => state.emailerror).distinct();
+  Stream<String> get emailErrorStream => _controller.stream.map((state) => state.emailError).distinct();
+  Stream<String> get passwordErrorStream => _controller.stream.map((state) => state.passwordError).distinct();
   Stream<bool> get isFormValidStream => _controller.stream.map((state) => state.isFormValid).distinct();
 
   StreamLoginPresenter({@required this.validation});
 
+  void update() => _controller.add(_state);
+
   void validadeEmail(String email) {
-    _state.emailerror = validation.validate(field: 'email', value: email);
-    _controller.add(_state);
+    _state.emailError = validation.validate(field: 'email', value: email);
+    update();
   }
   
   void validadePassword(String password) {
-    validation.validate(field: 'password', value: password);
+    _state.passwordError = validation.validate(field: 'password', value: password);
+    update();
   }
 }
