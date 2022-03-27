@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:clean_flutter_app/ui/pages/pages.dart';
 import 'package:meta/meta.dart';
 
 import '../../domain/helpers/helpers.dart';
@@ -20,7 +21,7 @@ class LoginState {
   && password != null;
 }
 
-class StreamLoginPresenter {
+class StreamLoginPresenter implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   var _controller = StreamController<LoginState>.broadcast();
@@ -36,18 +37,21 @@ class StreamLoginPresenter {
 
   void _update() => _controller?.add(_state);
 
-  void validadeEmail(String email) {
+  @override
+  void validateEmail(String email) {
     _state.email = email;
     _state.emailError = validation.validate(field: 'email', value: email);
     _update();
   }
   
-  void validadePassword(String password) {
+  @override
+  void validatePassword(String password) {
     _state.password = password;
     _state.passwordError = validation.validate(field: 'password', value: password);
     _update();
   }
 
+  @override
   Future<void> auth() async {
     _state.isLoading = true;
     _update();
@@ -60,6 +64,7 @@ class StreamLoginPresenter {
     _update();
   }
 
+  @override
   void dispose() {
     _controller?.close();
     _controller = null;
