@@ -16,7 +16,7 @@ void main() {
 
   setUp(() {
     client = ClientSpy();
-    sut = HttpAdapter(client);
+    sut = HttpAdapter(client: client);
     url = faker.internet.httpUrl();
   });
 
