@@ -1,33 +1,10 @@
-import 'package:clean_flutter_app/domain/entities/account_entity.dart';
-import 'package:clean_flutter_app/domain/helpers/helpers.dart';
 import 'package:faker/faker.dart';
-import 'package:get/get.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:meta/meta.dart';
 
+import 'package:clean_flutter_app/domain/entities/entities.dart';
 import 'package:clean_flutter_app/domain/usecases/usecases.dart';
-import 'package:clean_flutter_app/ui/pages/pages.dart';
-
-class GetxSplashPresenter implements SplashPresenter {
-  final LoadCurrentAccount loadCurrentAccount;
-  GetxSplashPresenter({@required this.loadCurrentAccount});
-  
-  RxString _navigateTo = RxString();
-  
-  @override
-  Stream<String> get navigateToStream => _navigateTo.stream;
-  
-  @override
-  Future<void> checkAccount() async {
-    try {
-      final account = await loadCurrentAccount.load();
-      _navigateTo.value = (account.isNull) ? '/login' : '/surveys';
-    } catch(error) {
-       _navigateTo.value = '/login';
-    }
-  }
-}
+import 'package:clean_flutter_app/presentation/presenters/presenters.dart';
 
 class LoadCurrentAccountSpy extends Mock implements LoadCurrentAccount {}
 
