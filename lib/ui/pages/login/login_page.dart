@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../components/components.dart';
 import 'components/components.dart';
 import '../pages.dart';
+import '../../../utils/i18n/i18n.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginPresenter presenter;
@@ -68,7 +69,7 @@ class LoginPage extends StatelessWidget {
                           LoginButton(),
                           FlatButton.icon(
                             icon: Icon(Icons.person),
-                            label: Text('Criar Conta'),
+                            label: Text(R.strings.addAccount),
                             onPressed: () {},
                           ),
                         ],
