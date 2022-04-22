@@ -20,10 +20,11 @@ class App extends StatelessWidget {
       title: 'Clean Flutter App',
       debugShowCheckedModeBanner: false,
       theme: makeAppTheme(),
-      initialRoute: '/login',
+      initialRoute: '/',
       getPages: [
-        GetPage(name: '/login', page: makeLoginPage),
-        GetPage(name: '/surveys', page: () => Scaffold(body: Text('Enquetes'))),
+        GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
+        GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+        GetPage(name: '/surveys', page: () => Scaffold(body: Center(child: Text('Enquetes'))), transition: Transition.fadeIn),
       ],
     );
   }
