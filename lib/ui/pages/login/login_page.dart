@@ -7,7 +7,6 @@ import '../../components/components.dart';
 import 'components/components.dart';
 import '../../helpers/helpers.dart';
 import '../pages.dart';
-import '../../../utils/i18n/i18n.dart';
 
 class LoginPage extends StatelessWidget {
   final LoginPresenter presenter;
