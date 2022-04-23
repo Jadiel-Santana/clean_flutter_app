@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../helpers/helpers.dart';
 import '../login_presenter.dart';
 
 class PasswordInput extends StatelessWidget {
@@ -8,7 +9,7 @@ class PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     final presenter = Provider.of<LoginPresenter>(context);
 
-    return StreamBuilder<String>(
+    return StreamBuilder<UIError>(
       stream: presenter.emailErrorStream,
       builder: (context, snapshot) {
         return TextFormField(
@@ -19,7 +20,7 @@ class PasswordInput extends StatelessWidget {
               Icons.email,
               color: Theme.of(context).primaryColorLight,
             ),
-            errorText: (snapshot.data?.isEmpty == true) ? null : snapshot.data,
+            errorText: snapshot.hasData ? snapshot.data.description : null,
           ),
           keyboardType: TextInputType.emailAddress,
         );
